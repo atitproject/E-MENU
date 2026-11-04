@@ -35,9 +35,9 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: var(--font-body);
-  background:
-    radial-gradient(1200px 600px at 100% -10%, rgba(212,165,116,0.10), transparent 60%),
-    var(--cream);
+  background-color: var(--cream);
+  background-image: linear-gradient(to bottom, #ffffff 0px, #ffffff 300px, var(--cream) 760px);
+  background-repeat: no-repeat;
   color: var(--green-900);
   min-height: 100vh;
 }
@@ -152,7 +152,7 @@ body {
   position: sticky;
   top: var(--header-h);
   z-index: 40;
-  background: var(--cream);
+  background: #ffffff;
   box-shadow: 0 6px 10px -8px rgba(26,58,50,0.25);
 }
 .cat-rail {

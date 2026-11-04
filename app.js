@@ -312,7 +312,11 @@
 
   function scrollToSection(id) {
     const sec = document.getElementById("sec-" + id);
-    if (sec) sec.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!sec) return;
+    const hh = parseInt(getComputedStyle(htmlEl).getPropertyValue("--header-h")) || 72;
+    const rh = parseInt(getComputedStyle(htmlEl).getPropertyValue("--rail-h")) || 56;
+    const y = sec.getBoundingClientRect().top + window.pageYOffset - (hh + rh + 6);
+    window.scrollTo({ top: y < 0 ? 0 : y, behavior: "smooth" });
   }
 
   // ---------- Scroll-spy ----------
