@@ -351,3 +351,31 @@ const RESTAURANT = {
   instagramUrl: "https://instagram.com/laialybasma",
   currency: "₪",
 };
+
+// ---- مجموعات علوية / Top-level groups ----
+const GROUPS = [
+  { id: "all",      label: { ar: "الكل",     en: "All",      he: "הכל" } },
+  { id: "offers",   label: { ar: "عروض",     en: "Offers",   he: "הצעות" } },
+  { id: "food",     label: { ar: "طعام",     en: "Food",     he: "אוכל" } },
+  { id: "drinks",   label: { ar: "مشروبات",  en: "Drinks",   he: "משקאות" } },
+  { id: "desserts", label: { ar: "حلويات",   en: "Desserts", he: "קינוחים" } },
+  { id: "hookah",   label: { ar: "أراجيل",   en: "Hookah",   he: "נרגילה" } },
+];
+
+// category id -> group id  (null = only appears under "الكل")
+const CATEGORY_GROUP = {
+  "new": null,
+  "offers": "offers",
+  "breakfast": "food", "salads": "food", "appetizers": "food", "meats": "food",
+  "fish": "food", "kids": "food", "special-dishes": "food", "pasta-pizza": "food",
+  "sandwiches": "food", "basma-burger": "food",
+  "natural-drinks": "drinks", "milkshake": "drinks", "smoothie": "drinks",
+  "pitchers": "drinks", "mojito": "drinks", "hot-drinks": "drinks",
+  "soft-drinks": "drinks", "cocktails": "drinks",
+  "desserts": "desserts", "special-basma": "desserts",
+  "shisha-flavors": "hookah", "fresh": "hookah", "shisha-services": "hookah",
+};
+
+// search placeholder per language
+const SEARCH_PH = { ar: "ابحث في القائمة...", en: "Search the menu...", he: "חיפוש בתפריט..." };
+const NO_RESULTS = { ar: "لا توجد نتائج", en: "No results found", he: "לא נמצאו תוצאות" };

@@ -1,6 +1,6 @@
 // ============================================================
 //  ليالي بسمة — Laialy Basma  |  Menu rendering & interactions
-//  Trilingual (ar / en / he) + smooth category scroll-spy
+//  Trilingual (ar / en / he) + groups + search + smooth scroll-spy
 // ============================================================
 
 (function () {
@@ -15,6 +15,7 @@
 
   // ---------- State ----------
   let lang = "ar";
+  let group = "all";
   try {
     const saved = localStorage.getItem("lb_lang");
     if (saved && LANGS[saved]) lang = saved;
@@ -22,14 +23,18 @@
 
   const htmlEl = document.documentElement;
   const catRail = $("#catRail");
+  const groupTabs = $("#groupTabs");
   const drawerList = $("#drawerList");
   const menuRoot = $("#menuRoot");
+  const searchInput = $("#searchInput");
+  const noResults = $("#noResults");
 
   let pills = [];
   let sections = [];
+  let itemEls = []; // itemEls[catIndex] = [row elements]
   let activeId = null;
 
-  // ---------- Build language dropdown ----------
+  // ---------- Language dropdown ----------
   const langMenu = $("#langMenu");
   function buildLangMenu() {
     langMenu.innerHTML = "";
@@ -45,24 +50,42 @@
     });
   }
 
+  // ---------- Group tabs ----------
+  function buildGroupTabs() {
+    groupTabs.innerHTML = "";
+    GROUPS.forEach((g) => {
+      const b = el("button", "group-tab" + (g.id === group ? " active" : ""));
+      b.textContent = g.label[lang] || g.label.ar;
+      b.dataset.group = g.id;
+      b.addEventListener("click", () => {
+        if (group === g.id) return;
+        group = g.id;
+        groupTabs.querySelectorAll(".group-tab").forEach((x) =>
+          x.classList.toggle("active", x.dataset.group === group)
+        );
+        applyFilter();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      groupTabs.appendChild(b);
+    });
+  }
+
   // ---------- Render menu in current language ----------
   function render() {
-    const t = UI[lang];
     catRail.innerHTML = "";
     drawerList.innerHTML = "";
     menuRoot.innerHTML = "";
+    itemEls = [];
 
     MENU.forEach((cat, i) => {
       const catName = cat.name[lang] || cat.name.ar;
 
-      // pill
       const pill = el("button", "cat-pill" + (i === 0 ? " active" : ""));
       pill.textContent = catName;
       pill.dataset.target = cat.id;
       pill.addEventListener("click", () => scrollToSection(cat.id));
       catRail.appendChild(pill);
 
-      // drawer entry
       const d = el("button");
       const nameSpan = el("span");
       nameSpan.textContent = catName;
@@ -70,13 +93,9 @@
       cnt.textContent = cat.items.length;
       d.appendChild(nameSpan);
       d.appendChild(cnt);
-      d.addEventListener("click", () => {
-        scrollToSection(cat.id);
-        closeDrawer();
-      });
+      d.addEventListener("click", () => { scrollToSection(cat.id); closeDrawer(); });
       drawerList.appendChild(d);
 
-      // section
       const section = el("section");
       section.id = "sec-" + cat.id;
 
@@ -86,26 +105,29 @@
       h2.textContent = catName;
       const count = el("span", "section-count");
       count.textContent = "(" + cat.items.length + ")";
-      head.appendChild(bar);
-      head.appendChild(h2);
-      head.appendChild(count);
+      head.appendChild(bar); head.appendChild(h2); head.appendChild(count);
       section.appendChild(head);
 
       const cards = el("div", "cards");
-      cat.items.forEach((item) => cards.appendChild(renderItem(item, t)));
+      const rows = [];
+      cat.items.forEach((item) => {
+        const row = renderItem(item);
+        rows.push(row);
+        cards.appendChild(row);
+      });
+      itemEls.push(rows);
       section.appendChild(cards);
-
       menuRoot.appendChild(section);
     });
 
     pills = Array.from(catRail.querySelectorAll(".cat-pill"));
     sections = MENU.map((c) => document.getElementById("sec-" + c.id));
-    activeId = null;
     measureSticky();
-    spy(true);
+    applyFilter();
   }
 
-  function renderItem(item, t) {
+  function renderItem(item) {
+    const t = UI[lang];
     const row = el("div", "item");
 
     const imgWrap = el("div", "item-img");
@@ -140,8 +162,7 @@
     amount.textContent = item.price;
     const cur = el("span", "cur");
     cur.textContent = RESTAURANT.currency;
-    price.appendChild(amount);
-    price.appendChild(cur);
+    price.appendChild(amount); price.appendChild(cur);
     body.appendChild(price);
 
     row.appendChild(imgWrap);
@@ -149,12 +170,45 @@
     return row;
   }
 
-  // ---------- Apply language (dir, fonts, texts) ----------
+  // ---------- Filtering (group + search) ----------
+  function applyFilter() {
+    const q = (searchInput.value || "").trim().toLowerCase();
+    let anyVisible = false;
+
+    MENU.forEach((cat, i) => {
+      const groupOk = group === "all" || CATEGORY_GROUP[cat.id] === group;
+      let vis = 0;
+      cat.items.forEach((item, idx) => {
+        let match = true;
+        if (q) {
+          const names = [item.name.ar, item.name.en, item.name.he].join(" ").toLowerCase();
+          const descs = item.desc ? [item.desc.ar, item.desc.en, item.desc.he].join(" ").toLowerCase() : "";
+          match = names.indexOf(q) !== -1 || descs.indexOf(q) !== -1;
+        }
+        const show = groupOk && match;
+        itemEls[i][idx].style.display = show ? "" : "none";
+        if (show) vis++;
+      });
+      const secShow = groupOk && vis > 0;
+      sections[i].style.display = secShow ? "" : "none";
+      pills[i].style.display = secShow ? "" : "none";
+      if (secShow) anyVisible = true;
+    });
+
+    noResults.hidden = anyVisible;
+    if (!anyVisible) noResults.textContent = NO_RESULTS[lang];
+
+    activeId = null;
+    spy(true);
+  }
+
+  // ---------- Language chrome ----------
   function setLang(code) {
     lang = code;
     try { localStorage.setItem("lb_lang", code); } catch (_) {}
     applyLangChrome();
     buildLangMenu();
+    buildGroupTabs();
     render();
   }
 
@@ -168,14 +222,13 @@
     $("#brandName").textContent = L.brand;
     $("#langBtnLabel").textContent = L.label;
     $("#year").textContent = new Date().getFullYear();
+    searchInput.placeholder = SEARCH_PH[lang];
 
-    // footer
     $("#igFooter").textContent = "@" + RESTAURANT.instagram;
     $("#igFooter").href = RESTAURANT.instagramUrl;
     $("#footerFollow").firstChild.textContent = t.footerFollow + " ";
     $("#rights").textContent = t.rights;
 
-    // instagram modal
     $("#igHandle").textContent = "@" + RESTAURANT.instagram;
     $("#igFollow").href = RESTAURANT.instagramUrl;
     $("#igFollow").textContent = t.follow;
@@ -184,29 +237,24 @@
     const chipEls = document.querySelectorAll("#igChips .chip");
     t.igChips.forEach((c, i) => { if (chipEls[i]) chipEls[i].textContent = c; });
 
-    // drawer title
     $("#drawerTitle").textContent = t.sections;
     $("#toTop").setAttribute("aria-label", t.toTop);
   }
 
-  // ---------- Sticky offset measurement ----------
+  // ---------- Sticky offset ----------
   function measureSticky() {
     const header = $(".site-header");
     const rail = $(".cat-rail-outer");
-    const hh = header ? header.offsetHeight : 72;
-    const rh = rail ? rail.offsetHeight : 56;
-    htmlEl.style.setProperty("--header-h", hh + "px");
-    htmlEl.style.setProperty("--rail-h", rh + "px");
+    htmlEl.style.setProperty("--header-h", (header ? header.offsetHeight : 72) + "px");
+    htmlEl.style.setProperty("--rail-h", (rail ? rail.offsetHeight : 56) + "px");
   }
 
-  // ---------- Scroll to a section ----------
   function scrollToSection(id) {
     const sec = document.getElementById("sec-" + id);
-    if (!sec) return;
-    sec.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (sec) sec.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  // ---------- Scroll-spy (smooth: only acts on change) ----------
+  // ---------- Scroll-spy ----------
   function currentStick() {
     const hh = parseInt(getComputedStyle(htmlEl).getPropertyValue("--header-h")) || 72;
     const rh = parseInt(getComputedStyle(htmlEl).getPropertyValue("--rail-h")) || 56;
@@ -216,19 +264,21 @@
   function spy(force) {
     if (!sections.length) return;
     const stick = currentStick();
-    let newActive = MENU[0].id;
+    let newActive = null;
     for (let i = 0; i < sections.length; i++) {
       const s = sections[i];
-      if (s && s.getBoundingClientRect().top <= stick) newActive = MENU[i].id;
+      if (!s || s.style.display === "none") continue;
+      if (newActive === null) newActive = MENU[i].id;
+      if (s.getBoundingClientRect().top <= stick) newActive = MENU[i].id;
     }
+    if (newActive === null) return;
     if (newActive === activeId && !force) return;
     activeId = newActive;
 
     for (let i = 0; i < pills.length; i++) {
       const on = pills[i].dataset.target === activeId;
       if (on) {
-        if (!pills[i].classList.contains("active")) pills[i].classList.add("active");
-        // center the active pill inside the rail only (never scrolls the page)
+        pills[i].classList.add("active");
         pills[i].scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
       } else {
         pills[i].classList.remove("active");
@@ -241,48 +291,31 @@
   }
 
   let ticking = false;
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          spy(false);
-          toggleToTop();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    },
-    { passive: true }
-  );
-  window.addEventListener("resize", () => { measureSticky(); });
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => { spy(false); toggleToTop(); ticking = false; });
+      ticking = true;
+    }
+  }, { passive: true });
+  window.addEventListener("resize", measureSticky);
+
+  // ---------- Search ----------
+  searchInput.addEventListener("input", applyFilter);
 
   // ---------- Language dropdown toggle ----------
-  const langBtn = $("#langBtn");
-  langBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    langMenu.classList.toggle("open");
-  });
+  $("#langBtn").addEventListener("click", (e) => { e.stopPropagation(); langMenu.classList.toggle("open"); });
   document.addEventListener("click", () => langMenu.classList.remove("open"));
 
   // ---------- Drawer ----------
   const drawer = $("#drawer");
   const drawerOverlay = $("#drawerOverlay");
-  function closeDrawer() {
-    drawer.classList.remove("open");
-    drawerOverlay.classList.remove("open");
-  }
-  $("#menuBtn").addEventListener("click", () => {
-    drawer.classList.add("open");
-    drawerOverlay.classList.add("open");
-  });
+  function closeDrawer() { drawer.classList.remove("open"); drawerOverlay.classList.remove("open"); }
+  $("#menuBtn").addEventListener("click", () => { drawer.classList.add("open"); drawerOverlay.classList.add("open"); });
   $("#drawerClose").addEventListener("click", closeDrawer);
   drawerOverlay.addEventListener("click", closeDrawer);
 
   // ---------- Scroll to top ----------
-  $("#toTop").addEventListener("click", () =>
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  );
+  $("#toTop").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
   // ---------- Instagram modal (once per session) ----------
   const igOverlay = $("#igOverlay");
@@ -300,9 +333,9 @@
 
   // ---------- Init ----------
   buildLangMenu();
+  buildGroupTabs();
   applyLangChrome();
   render();
-  // re-measure after fonts load (avoids sticky offset drift)
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureSticky);
   window.addEventListener("load", measureSticky);
 })();

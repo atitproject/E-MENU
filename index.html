@@ -37,15 +37,25 @@
     </div>
   </header>
 
-  <!-- Category rail -->
+  <!-- Groups + Category rail -->
   <div class="cat-rail-outer">
     <div class="wrap">
+      <div class="group-tabs scrollbar-hide" id="groupTabs"></div>
       <div class="cat-rail scrollbar-hide" id="catRail"></div>
     </div>
   </div>
 
   <!-- Menu -->
-  <main class="wrap" id="menuRoot"></main>
+  <main class="wrap">
+    <div class="search-wrap">
+      <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M11 19a8 8 0 100-16 8 8 0 000 16z" />
+      </svg>
+      <input id="searchInput" class="search-input" type="search" autocomplete="off" />
+    </div>
+    <div id="menuRoot"></div>
+    <p id="noResults" class="no-results" hidden></p>
+  </main>
 
   <footer class="site-footer wrap">
     <p id="footerFollow">تابعونا على إنستغرام <a id="igFooter" href="#" target="_blank" rel="noopener"></a></p>

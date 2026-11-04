@@ -181,6 +181,86 @@ body {
   box-shadow: 0 4px 15px rgba(26,58,50,0.19);
 }
 
+/* ---------- Group tabs (All / Offers / Food ...) ---------- */
+.group-tabs {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding: 0.6rem 1rem 0.35rem;
+  border-bottom: 1px solid rgba(26,58,50,0.08);
+}
+.group-tab {
+  position: relative;
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.35rem 0.15rem 0.5rem;
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: rgba(26,58,50,0.5);
+  transition: color .2s ease;
+}
+.group-tab:hover { color: var(--green-900); }
+.group-tab.active { color: var(--green-900); font-weight: 700; }
+.group-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75%;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--green-900);
+}
+
+/* ---------- Search ---------- */
+.search-wrap {
+  position: relative;
+  margin: 1rem 0 0.25rem;
+}
+.search-icon {
+  position: absolute;
+  inset-inline-start: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.15rem;
+  height: 1.15rem;
+  color: rgba(26,58,50,0.4);
+  pointer-events: none;
+}
+.search-input {
+  width: 100%;
+  padding: 0.85rem 2.8rem 0.85rem 1rem;
+  padding-inline-start: 2.8rem;
+  padding-inline-end: 1rem;
+  border: 1px solid rgba(26,58,50,0.12);
+  border-radius: 1rem;
+  background: #fff;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--green-900);
+  outline: none;
+  box-shadow: 0 2px 8px rgba(26,58,50,0.05);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.search-input::placeholder { color: rgba(26,58,50,0.4); }
+.search-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212,165,116,0.18);
+}
+
+.no-results {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: rgba(26,58,50,0.5);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
 /* ---------- Menu sections ---------- */
 main { padding: 0 1rem 4rem; }
 
@@ -208,20 +288,25 @@ main { padding: 0 1rem 4rem; }
 .section-count { font-size: 0.875rem; color: rgba(26,58,50,0.38); }
 
 .cards {
-  background: var(--card);
-  border-radius: 1.25rem;
-  overflow: hidden;
-  box-shadow: 0 2px 12px rgba(26,58,50,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: transparent;
 }
 
-/* ---------- Item card ---------- */
+/* ---------- Item card (each item is its own card) ---------- */
 .item {
   display: flex;
   flex-direction: row; /* image is first child; dir flips it automatically */
   min-height: 8rem;
-  border-bottom: 1px solid rgba(26,58,50,0.06);
+  background: var(--card);
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(26,58,50,0.07);
+  border: 1px solid rgba(26,58,50,0.05);
+  transition: box-shadow .2s ease, transform .2s ease;
 }
-.item:last-child { border-bottom: none; }
+.item:hover { box-shadow: 0 6px 18px rgba(26,58,50,0.12); }
 
 .item-img {
   position: relative;
