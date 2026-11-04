@@ -10,7 +10,9 @@ const img = (f) => IMG_BASE + f;
 const NO_IMG = "no-img.jpg";
 
 // name/desc: { ar, en, he }  |  price  |  img  |  soldOut
-const MENU = [
+// NOTE: `let` (not const) so data-loader.js can replace these with live
+// Supabase data at runtime; this static copy is the offline fallback.
+let MENU = [
   {
     id: "new",
     name: { ar: "جديد", en: "New", he: "חדש" },
@@ -349,7 +351,7 @@ const UI = {
   he: { tagline: "✦ מסעדה ובית קפה ✦", subtitle: "מסעדה ובית קפה", sections: "קטגוריות", soldOut: "אזל מהמלאי", available: "זמין", priceLabel: "מחיר", callUs: "התקשר אלינו", location: "המיקום שלנו", close: "סגור", rateUs: "דרגו אותנו", rateSub: "דעתכם חשובה לנו!", commentPH: "כתבו תגובה (אופציונלי)...", submitRating: "שליחת דירוג", thanks: "תודה על הדירוג!", igTitle: "עקבו אחרינו באינסטגרם", igChips: ["אירועים מיוחדים", "מנות עונתיות", "מבצעים יומיים"], follow: "עקבו", skip: "דלג", footerFollow: "עקבו אחרינו באינסטגרם", rights: "כל הזכויות שמורות", toTop: "למעלה" },
 };
 
-const RESTAURANT = {
+let RESTAURANT = {
   phone: "050-000-0000",
   mapsUrl: "#",
   instagram: "",
@@ -360,7 +362,7 @@ const RESTAURANT = {
 };
 
 // ---- مجموعات علوية / Top-level groups ----
-const GROUPS = [
+let GROUPS = [
   { id: "all",      label: { ar: "الكل",     en: "All",      he: "הכל" } },
   { id: "offers",   label: { ar: "عروض",     en: "Offers",   he: "הצעות" } },
   { id: "food",     label: { ar: "طعام",     en: "Food",     he: "אוכל" } },
@@ -370,7 +372,7 @@ const GROUPS = [
 ];
 
 // category id -> group id  (null = only appears under "الكل")
-const CATEGORY_GROUP = {
+let CATEGORY_GROUP = {
   "new": null,
   "offers": "offers",
   "breakfast": "food", "salads": "food", "appetizers": "food", "meats": "food",

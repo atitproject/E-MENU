@@ -3,8 +3,10 @@
 //  Trilingual (ar / en / he) + groups + search + smooth scroll-spy
 // ============================================================
 
-(function () {
+window.bootMenu = function () {
   "use strict";
+  if (window.__menuBooted) return;
+  window.__menuBooted = true;
 
   const $ = (sel, root = document) => root.querySelector(sel);
   const el = (tag, cls) => {
@@ -438,4 +440,4 @@
   render();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureSticky);
   window.addEventListener("load", measureSticky);
-})();
+};

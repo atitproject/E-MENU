@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة التحكم | منيو مطعم</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{ --green-900:#1a3a32; --green-800:#234d42; --gold:#d4a574; --cream:#f5f1ec; --card:#fff; --line:rgba(26,58,50,.12); }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Cairo",sans-serif;background:var(--cream);color:var(--green-900)}
+    a{color:var(--green-800)}
+    .hidden{display:none !important}
+    /* login */
+    .login-wrap{min-height:100vh;display:grid;place-items:center;padding:1rem}
+    .login-card{background:#fff;border-radius:1.25rem;box-shadow:0 20px 50px -20px rgba(0,0,0,.3);padding:2rem 1.5rem;width:100%;max-width:22rem;text-align:center}
+    .login-card h1{font-size:1.4rem;margin:.2rem 0 1.2rem}
+    .login-card .logo{width:64px;height:64px;border-radius:9999px;margin:0 auto 1rem;background:linear-gradient(145deg,var(--green-900),var(--green-800));display:grid;place-items:center;color:var(--gold);font-weight:800;font-size:1.3rem}
+    input,select,textarea{width:100%;padding:.7rem .85rem;border:1px solid var(--line);border-radius:.7rem;font-family:inherit;font-size:.95rem;color:var(--green-900);background:#fff;outline:none;margin-bottom:.7rem}
+    input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+    label{display:block;text-align:right;font-size:.8rem;font-weight:600;margin:.2rem 0 .3rem;color:rgba(26,58,50,.7)}
+    .btn{display:inline-block;border:none;border-radius:.8rem;padding:.75rem 1.1rem;font-family:inherit;font-weight:700;font-size:.9rem;cursor:pointer;background:var(--green-800);color:#fff;transition:background .2s}
+    .btn:hover{background:var(--green-900)}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .btn-block{display:block;width:100%}
+    .btn-gold{background:var(--gold);color:#3a2a17}
+    .btn-gold:hover{background:#c79256}
+    .btn-sm{padding:.4rem .7rem;font-size:.8rem;border-radius:.6rem}
+    .btn-danger{background:#dc2626}.btn-danger:hover{background:#b91c1c}
+    .btn-ghost{background:transparent;color:var(--green-800);border:1px solid var(--line)}
+    .err{color:#dc2626;font-size:.85rem;min-height:1.2rem;margin-bottom:.4rem}
+    /* shell */
+    header.bar{background:linear-gradient(var(--green-900),var(--green-800));color:#fff;padding:.8rem 1rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+    header.bar h1{font-size:1.1rem;margin:0}
+    header.bar .right{display:flex;gap:.5rem;align-items:center}
+    .tabs{display:flex;gap:.4rem;overflow-x:auto;padding:.7rem 1rem;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:52px;z-index:9}
+    .tab{flex-shrink:0;border:1px solid var(--line);background:#fff;border-radius:9999px;padding:.45rem .9rem;font-weight:600;font-size:.85rem;cursor:pointer;color:var(--green-900)}
+    .tab.active{background:var(--green-900);color:#fff;border-color:transparent}
+    main{max-width:48rem;margin:0 auto;padding:1rem 1rem 4rem}
+    .panel{display:none}.panel.active{display:block}
+    .panel-head{display:flex;align-items:center;justify-content:space-between;margin:.5rem 0 1rem}
+    .panel-head h2{font-size:1.2rem;margin:0}
+    .list{display:flex;flex-direction:column;gap:.6rem}
+    .row{background:#fff;border:1px solid var(--line);border-radius:.9rem;padding:.7rem .9rem;display:flex;align-items:center;gap:.7rem}
+    .row img{width:46px;height:46px;border-radius:.5rem;object-fit:cover;background:var(--cream);flex-shrink:0}
+    .row .info{flex:1;min-width:0}
+    .row .info .t{font-weight:700;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .row .info .s{font-size:.78rem;color:rgba(26,58,50,.55)}
+    .row .acts{display:flex;gap:.35rem;flex-shrink:0}
+    .badge{font-size:.68rem;font-weight:700;padding:.15rem .5rem;border-radius:9999px;background:rgba(239,68,68,.12);color:#dc2626}
+    .muted{color:rgba(26,58,50,.5);font-size:.85rem;text-align:center;padding:1.5rem}
+    /* modal */
+    .modal-ov{position:fixed;inset:0;background:rgba(26,58,50,.55);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;padding:1rem;z-index:50;overflow-y:auto}
+    .modal-ov.open{display:flex}
+    .modal{background:#fff;border-radius:1.1rem;padding:1.3rem;width:100%;max-width:30rem;margin:auto}
+    .modal h3{margin:.1rem 0 1rem}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+    .chk{display:flex;align-items:center;gap:.5rem;margin:.3rem 0 .8rem}
+    .chk input{width:auto;margin:0}
+    .modal-acts{display:flex;gap:.5rem;margin-top:.4rem}
+    .thumb-prev{width:70px;height:70px;border-radius:.6rem;object-fit:cover;background:var(--cream);margin-bottom:.5rem}
+    .toast{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);background:var(--green-900);color:#fff;padding:.7rem 1.1rem;border-radius:.7rem;font-size:.9rem;z-index:100;opacity:0;transition:opacity .25s;pointer-events:none}
+    .toast.show{opacity:1}
+    .hint{font-size:.8rem;color:rgba(26,58,50,.6);background:#fff;border:1px dashed var(--line);border-radius:.8rem;padding:.8rem;margin-bottom:1rem}
+  </style>
+</head>
+<body>
+
+  <!-- Login -->
+  <div class="login-wrap" id="loginView">
+    <div class="login-card">
+      <div class="logo">☕</div>
+      <h1>لوحة التحكم</h1>
+      <form id="loginForm">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="email" autocomplete="username" required />
+        <label>كلمة المرور</label>
+        <input type="password" id="password" autocomplete="current-password" required />
+        <div class="err" id="loginErr"></div>
+        <button class="btn btn-block" id="loginBtn" type="submit">دخول</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dashView" class="hidden">
+    <header class="bar">
+      <h1>لوحة تحكم المنيو</h1>
+      <div class="right">
+        <a class="btn btn-ghost btn-sm" href="index.html" target="_blank" style="color:#fff;border-color:rgba(255,255,255,.3)">عرض المنيو</a>
+        <button class="btn btn-ghost btn-sm" id="logoutBtn" style="color:#fff;border-color:rgba(255,255,255,.3)">خروج</button>
+      </div>
+    </header>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="items">الأصناف</button>
+      <button class="tab" data-tab="categories">الأقسام</button>
+      <button class="tab" data-tab="groups">المجموعات</button>
+      <button class="tab" data-tab="settings">الإعدادات</button>
+    </div>
+
+    <main>
+      <!-- Items -->
+      <section class="panel active" id="panel-items">
+        <div class="panel-head">
+          <h2>الأصناف</h2>
+          <button class="btn btn-sm" id="addItem">+ صنف</button>
+        </div>
+        <select id="itemCatFilter" style="margin-bottom:1rem"><option value="">كل الأقسام</option></select>
+        <div class="list" id="itemsList"></div>
+      </section>
+
+      <!-- Categories -->
+      <section class="panel" id="panel-categories">
+        <div class="panel-head">
+          <h2>الأقسام</h2>
+          <button class="btn btn-sm" id="addCat">+ قسم</button>
+        </div>
+        <div class="list" id="catsList"></div>
+      </section>
+
+      <!-- Groups -->
+      <section class="panel" id="panel-groups">
+        <div class="panel-head">
+          <h2>المجموعات</h2>
+          <button class="btn btn-sm" id="addGroup">+ مجموعة</button>
+        </div>
+        <div class="list" id="groupsList"></div>
+      </section>
+
+      <!-- Settings -->
+      <section class="panel" id="panel-settings">
+        <div class="panel-head"><h2>الإعدادات</h2></div>
+        <div class="hint">استورد المنيو الثابت الحالي دفعة واحدة إلى قاعدة البيانات (يحذف المحتوى الحالي في القاعدة ويستبدله).</div>
+        <button class="btn btn-gold" id="importBtn" style="margin-bottom:1.5rem">استيراد المنيو الحالي</button>
+        <form id="settingsForm">
+          <div class="grid2">
+            <div><label>اسم المطعم (ع)</label><input id="set_name_ar" /></div>
+            <div><label>Name (EN)</label><input id="set_name_en" /></div>
+          </div>
+          <label>שם (HE)</label><input id="set_name_he" />
+          <div class="grid2">
+            <div><label>الوصف أسفل الاسم (ع)</label><input id="set_tag_ar" /></div>
+            <div><label>Tagline (EN)</label><input id="set_tag_en" /></div>
+          </div>
+          <label>Tagline (HE)</label><input id="set_tag_he" />
+          <label>رقم الهاتف</label><input id="set_phone" />
+          <label>رابط الموقع (خرائط)</label><input id="set_maps" />
+          <label>رابط فيسبوك</label><input id="set_fb" />
+          <label>رابط إنستغرام</label><input id="set_ig" />
+          <label>رابط تيك توك</label><input id="set_tt" />
+          <label>العملة</label><input id="set_currency" />
+          <button class="btn btn-block" id="saveSettings" type="submit">حفظ الإعدادات</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <!-- Record modal -->
+  <div class="modal-ov" id="modal">
+    <div class="modal">
+      <h3 id="modalTitle"></h3>
+      <div id="modalBody"></div>
+      <div class="err" id="modalErr"></div>
+      <div class="modal-acts">
+        <button class="btn btn-block" id="modalSave">حفظ</button>
+        <button class="btn btn-ghost" id="modalCancel">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="supabase-config.js"></script>
+  <script src="menu-data.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
