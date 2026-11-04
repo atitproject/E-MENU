@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+  <title>ليالي بسمة | Laialy Basma</title>
+  <meta name="description" content="منيو مطعم ومقهى ليالي بسمة — مأكولات، مشاوي، مشروبات وأراجيل." />
+  <meta name="theme-color" content="#1a3a32" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <button class="icon-btn" id="menuBtn" aria-label="القائمة">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      <div class="brand">
+        <p class="tag" id="tagline"></p>
+        <h1 id="brandName"></h1>
+      </div>
+
+      <div class="lang">
+        <button class="lang-btn" id="langBtn"><span>العربية</span></button>
+        <div class="lang-menu" id="langMenu">
+          <button class="active">العربية</button>
+          <button>English</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Category rail -->
+  <div class="cat-rail-outer">
+    <div class="wrap">
+      <div class="cat-rail scrollbar-hide" id="catRail"></div>
+    </div>
+  </div>
+
+  <!-- Menu -->
+  <main class="wrap" id="menuRoot"></main>
+
+  <footer class="site-footer wrap">
+    <p>تابعونا على إنستغرام <a id="igFooter" href="#" target="_blank" rel="noopener"></a></p>
+    <p style="margin-top:.5rem;opacity:.7">© <span id="year"></span> ليالي بسمة — جميع الحقوق محفوظة</p>
+  </footer>
+
+  <!-- Scroll to top -->
+  <button class="to-top" id="toTop" aria-label="للأعلى">
+    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" />
+    </svg>
+  </button>
+
+  <!-- Drawer (full category list) -->
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-head">
+      <h2>الأقسام</h2>
+      <button class="icon-btn" id="drawerClose" aria-label="إغلاق">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="drawer-list" id="drawerList"></div>
+  </aside>
+
+  <!-- Instagram modal -->
+  <div class="modal-overlay" id="igOverlay">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="ig-logo">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.17.05 1.8.25 2.23.42.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.42.37 1.06.42 2.23.06 1.3.07 1.69.07 4.9s0 3.6-.07 4.9c-.05 1.17-.25 1.8-.42 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.17-1.06.37-2.23.42-1.3.06-1.69.07-4.9.07s-3.6 0-4.9-.07c-1.17-.05-1.8-.25-2.23-.42a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.17-.42-.37-1.06-.42-2.23C2.21 15.6 2.2 15.21 2.2 12s0-3.6.07-4.9c.05-1.17.25-1.8.42-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.17 1.06-.37 2.23-.42C8.4 2.21 8.79 2.2 12 2.2zm0 1.98c-3.15 0-3.52.01-4.76.07-.9.04-1.38.19-1.71.32-.43.17-.74.37-1.06.69-.32.32-.52.63-.69 1.06-.13.33-.28.81-.32 1.71-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.04.9.19 1.38.32 1.71.17.43.37.74.69 1.06.32.32.63.52 1.06.69.33.13.81.28 1.71.32 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c.9-.04 1.38-.19 1.71-.32.43-.17.74-.37 1.06-.69.32-.32.52-.63.69-1.06.13-.33.28-.81.32-1.71.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.04-.9-.19-1.38-.32-1.71a2.85 2.85 0 0 0-.69-1.06 2.85 2.85 0 0 0-1.06-.69c-.33-.13-.81-.28-1.71-.32-1.24-.06-1.61-.07-4.76-.07zm0 3.37a4.45 4.45 0 1 1 0 8.9 4.45 4.45 0 0 1 0-8.9zm0 7.34a2.89 2.89 0 1 0 0-5.78 2.89 2.89 0 0 0 0 5.78zm5.66-7.53a1.04 1.04 0 1 1-2.08 0 1.04 1.04 0 0 1 2.08 0z"/>
+        </svg>
+      </div>
+      <p class="ig-label">Instagram</p>
+      <h3>تابعنا على إنستغرام</h3>
+      <p class="handle" id="igHandle"></p>
+      <div class="chips">
+        <span class="chip">فعاليات خاصة</span>
+        <span class="chip">أطباق موسمية</span>
+        <span class="chip">عروض يومية</span>
+      </div>
+      <a class="btn-follow" id="igFollow" href="#" target="_blank" rel="noopener">متابعة</a>
+      <button class="btn-skip" id="igSkip">تخطي</button>
+    </div>
+  </div>
+
+  <script src="menu-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
