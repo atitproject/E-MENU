@@ -1,5 +1,5 @@
 // ===============================================================
-//  بيانات منيو مطعم ومقهى ليالي بسمة  |  Laialy Basma — Menu Data
+//  بيانات منيو مطعم إلكتروني  |  Restaurant Menu — Menu Data
 //  متعدد اللغات: العربية / English / עברית
 // ===============================================================
 
@@ -24,13 +24,13 @@ const MENU = [
     id: "offers",
     name: { ar: "العروض المتوفرة", en: "Available Offers", he: "הצעות זמינות" },
     items: [
-      { name: { ar: "عرض ليالي بسمة", en: "Laialy Basma Offer", he: "הצעת ליאלי בסמה" }, desc: { ar: "تشمل: كيلو مشاوي مشكّل + بيتزا + إبريق ليمون + 10 أنواع سلطة مجانًا", en: "Includes: 1kg mixed grills + pizza + lemonade pitcher + 10 free salads", he: "כולל: קילו בשרים מעורבים על האש + פיצה + קנקן לימונדה + 10 סוגי סלט חינם" }, price: 350, img: img("1770905631746-thumb-1770905631255-4iema6.webp") },
-      { name: { ar: "عرض بحري بسمه", en: "Basma Seafood Offer", he: "מבצע פירות ים בסמה" }, desc: { ar: "يحتوي على صدف وكلماري وشريمس مطبوخ وشريمس وكلماري مقلي وفليه سلمون و 10 انواع سلطات مشكل ونوعين سلطه فرش", en: "Contains seashells, calamari, cooked shrimp, fried shrimp and calamari, salmon fillet, 10 types of mixed salads, and two types of fresh salad.", he: "מכיל צדפים, קלמרי, שרימפס מבושל, שרימפס וקלמרי מטוגן, פילה סלמון, 10 סוגי סלטים מעורבים ושני סוגי סלט טרי." }, price: 380, img: img("1792095664449-thumb-1792095663662-jwwc5.webp") },
+      { name: { ar: "عرض المطعم", en: "Restaurant Offer", he: "מבצע המסעדה" }, desc: { ar: "تشمل: كيلو مشاوي مشكّل + بيتزا + إبريق ليمون + 10 أنواع سلطة مجانًا", en: "Includes: 1kg mixed grills + pizza + lemonade pitcher + 10 free salads", he: "כולל: קילו בשרים מעורבים על האש + פיצה + קנקן לימונדה + 10 סוגי סלט חינם" }, price: 350, img: img("1770905631746-thumb-1770905631255-4iema6.webp") },
+      { name: { ar: "عرض بحري", en: "Seafood Offer", he: "מבצע פירות ים" }, desc: { ar: "يحتوي على صدف وكلماري وشريمس مطبوخ وشريمس وكلماري مقلي وفليه سلمون و 10 انواع سلطات مشكل ونوعين سلطه فرش", en: "Contains seashells, calamari, cooked shrimp, fried shrimp and calamari, salmon fillet, 10 types of mixed salads, and two types of fresh salad.", he: "מכיל צדפים, קלמרי, שרימפס מבושל, שרימפס וקלמרי מטוגן, פילה סלמון, 10 סוגי סלטים מעורבים ושני סוגי סלט טרי." }, price: 380, img: img("1792095664449-thumb-1792095663662-jwwc5.webp") },
     ],
   },
   {
     id: "breakfast",
-    name: { ar: "صباح بسمه", en: "Basma Morning", he: "בוקר בסמה" },
+    name: { ar: "الفطور", en: "Breakfast", he: "ארוחת בוקר" },
     items: [
       { name: { ar: "افطار ملوكي زوجي", en: "Royal Breakfast (For Two)", he: "ארוחת בוקר מלכותית לזוג" }, desc: { ar: "يُقدَّم على الطاولة: 12 نوع مقبلات، خبز فوكاشيا، منقوشة جبنة مشكلة، عجة حسب الاختيار، شكشوكة طماطم، جبنة مقلية؛ لكل شخص سلطة (أوراق خضراء أو عربية) ومشروب (ليمونادة، عصير برتقال، قهوة بالحليب، إسبرسو، شاي).", en: "Served to the table: 12 appetizers, focaccia, mixed-cheese manakish, omelet of choice, tomato shakshuka, fried cheese; per person a salad (greens or Arabic) and one drink (lemonade, orange juice, cafe au lait, espresso, tea).", he: "מוגש לשולחן: 12 סוגי מנות פתיחה, לחם פוקאצ'ה, מנקיש גבינות, חביתה לבחירה, שקשוקת עגבניות, גבינה מטוגנת; לכל סועד סלט (עלים ירוקים או ערבי) ומשקה לבחירה (לימונדה, מיץ תפוזים, קפה בחלב, אספרסו, תה)." }, price: 125, img: img("1770242206737-thumb-1770242206316-srdki.webp") },
       { name: { ar: "افطار فردي", en: "Royal Breakfast (Single)", he: "ארוחת בוקר מלכותית ליחיד" }, desc: { ar: "بيضتان حسب الاختيار (عيون، أومليت، مسلوق، عجة)، مع 7 أنواع مقبلات، سلطة صغيرة، خبز ساخن، سلطة (أوراق خضراء أو مقطعة)، ومشروب واحد (ليمونادة، عصير برتقال، قهوة بالحليب، إسبرسو، شاي).", en: "Two eggs your way (sunny side, omelet, boiled, or scrambled), 7 appetizers, a small salad, hot bread, a salad (greens or chopped), and one drink (lemonade, orange juice, cafe au lait, espresso, tea).", he: "שתי ביצים לבחירה (עין, אומלט, מבושל, חביתה), עם 7 סוגי מנות פתיחה, סלט קטן, לחם חם, סלט (עלים ירוקים או קצוץ) ומשקה אחד לבחירה (לימונדה, מיץ תפוזים, קפה בחלב, אספרסו, תה)." }, price: 68, img: img("1770242179765-thumb-1770242179409-mm5cjt.webp") },
@@ -40,7 +40,7 @@ const MENU = [
   },
   {
     id: "salads",
-    name: { ar: "سلطات بسمه", en: "Basma Salads", he: "סלטים בסמה" },
+    name: { ar: "السلطات", en: "Salads", he: "סלטים" },
     items: [
       { name: { ar: "سلطة صدر دجاج", en: "Chicken Breast Salad", he: "סלט חזה עוף" }, desc: { ar: "أوراق خضراء، بصل أحمر وأخضر، طماطم، براعم، وصدر دجاج مشوي بصلصة البيستو.", en: "Mixed greens with red and green onion, tomatoes, sprouts, and grilled chicken breast with pesto.", he: "עלים ירוקים עם בצל אדום וירוק, עגבניות, נבטים וחזה עוף צלוי ברוטב פסטו." }, price: 35, img: img("1770238829046-thumb-1770238828530-mabdg.webp") },
       { name: { ar: "سلطة فتوش", en: "Fattoush Salad", he: "סלט פטוש" }, desc: { ar: "طماطم، خيار، خس، بصل أحمر وأخضر، نعناع، خبز محمّص، دبس رمان، وجبن مفتت.", en: "Tomato, cucumber, lettuce, red and green onion, mint, toasted bread, pomegranate molasses, and crumbled cheese.", he: "עגבנייה, מלפפון, חסה, בצל אדום וירוק, נענע, לחם קלוי, רכז רימונים וגבינה מפוררת." }, price: 30, img: img("1770239507623-thumb-1770239507147-l4xn23.webp") },
@@ -129,7 +129,7 @@ const MENU = [
     name: { ar: "سندويشات", en: "Sandwiches", he: "סנדוויצ'ים" },
     items: [
       { name: { ar: "باجيت شنيتسيل", en: "Schnitzel Baguette", he: "באגט שניצל" }, desc: { ar: "يقدم مع بطاطا مقليه", en: "Served with french fries", he: "מוגש עם צ'יפס" }, price: 38, img: img("1770243116709-apply-1770243116709.webp") },
-      { name: { ar: "تورتيا ليالي بسمه", en: "Laialy Basma Tortilla", he: "טורטייה ליאלי בסמה" }, desc: { ar: "يقدم مع بطاطا مقليه", en: "Served with french fries", he: "מוגש עם צ'יפס" }, price: 40, img: img("1770242413476-apply-1770242413476.webp") },
+      { name: { ar: "تورتيا المطعم", en: "House Tortilla", he: "טורטייה הבית" }, desc: { ar: "يقدم مع بطاطا مقليه", en: "Served with french fries", he: "מוגש עם צ'יפס" }, price: 40, img: img("1770242413476-apply-1770242413476.webp") },
       { name: { ar: "تورتيا انتريكوت", en: "Entrecote Tortilla", he: "טורטייה אנטריקוט" }, desc: { ar: "يقدم مع بطاطا مقليه", en: "Served with french fries", he: "מוגש עם צ'יפס" }, price: 55, img: img("1770242413476-apply-1770242413476.webp") },
       { name: { ar: "تورتيا كباب", en: "Kebab Tortilla", he: "טורטייה קבב" }, desc: { ar: "يقدم مع بطاطا مقليه", en: "Served with french fries", he: "מוגש עם צ'יפס" }, price: 40, img: img("1770242413476-apply-1770242413476.webp") },
     ],
@@ -185,7 +185,7 @@ const MENU = [
   },
   {
     id: "basma-burger",
-    name: { ar: "بسمه برجر", en: "Basma Burger", he: "בורגר בסמה" },
+    name: { ar: "برجر", en: "Burgers", he: "בורגרים" },
     items: [
       { name: { ar: "برجر ١٦٠ غرام", en: "Burger 160g", he: "המבורגר 160 גרם" }, desc: { ar: "لحم مشوي مع طماطم وبصل أحمر وخس وبطاطا، وإضافات اختيارية: شيدر، بيضة، بصل مكرمل، موزاريلا مقلية.", en: "Grilled beef with tomato, red onion, lettuce, and fries; optional add-ons: cheddar, egg, caramelized onion, fried mozzarella.", he: "בשר צלוי עם עגבנייה, בצל אדום, חסה וצ'יפס; תוספות לבחירה: צ'דר, ביצה, בצל מקורמל, מוצרלה מטוגנת." }, price: 48, img: img("1770239591694-thumb-1770239591215-cwzrg.webp") },
       { name: { ar: "برجر دبل", en: "Double Burger", he: "המבורגר כפול" }, desc: { ar: "قطعتين لحم مشوي مع طماطم وبصل أحمر وخس وبطاطا، وإضافات اختيارية: شيدر، بيضة، بصل مكرمل، موزاريلا مقلية.", en: "Two grilled beef patties with tomato, red onion, lettuce, and fries; optional add-ons: cheddar, egg, caramelized onion, fried mozzarella.", he: "שתי נתחי בשר בגריל עם עגבניות, בצל אדום, חסה, צ'יפס ותוספות לבחירה: צ'דר, ביצה, בצל מקורמל, מוצרלה מטוגנת." }, price: 65, img: img("1770239604082-thumb-1770239603675-0q9lbe.webp") },
@@ -193,7 +193,7 @@ const MENU = [
   },
   {
     id: "mojito",
-    name: { ar: "موهيتو بسمه", en: "Basma Mojito", he: "מוחיטו בסמה" },
+    name: { ar: "موهيتو", en: "Mojito", he: "מוחיטו" },
     items: [
       { name: { ar: "بارادايس", en: "Paradise Mojito", he: "מוחיטו פרדייס" }, desc: { ar: "", en: "", he: "" }, price: 20, img: img("1770315171910-thumb-1770315171466-ji9g0k.webp") },
       { name: { ar: "موهيتو نعناع", en: "Mint Mojito", he: "מוחיטו נענע" }, desc: { ar: "", en: "", he: "" }, price: 20, img: img("1770315214872-thumb-1770315214378-jja24g.webp") },
@@ -267,7 +267,7 @@ const MENU = [
   },
   {
     id: "special-basma",
-    name: { ar: "سبيشل بسمه", en: "Basma Special", he: "ספיישל בסמה" },
+    name: { ar: "سبيشل", en: "Special", he: "ספיישל" },
     items: [
       { name: { ar: "صحن كنافه", en: "Kunafa Plate", he: "צלחת כנאפה" }, desc: { ar: "", en: "", he: "" }, price: 30, img: img("1770242413476-apply-1770242413476.webp"), soldOut: true },
       { name: { ar: "بان كيك", en: "Pancakes", he: "פנקייק" }, desc: { ar: "", en: "", he: "" }, price: 25, img: img("1770297140161-thumb-1770297137539-k1x31f.webp") },
@@ -289,7 +289,7 @@ const MENU = [
     id: "shisha-flavors",
     name: { ar: "نكهات أراجيل", en: "Hookah Flavors", he: "טעמי נרגילה" },
     items: [
-      { name: { ar: "ليالي بسمه", en: "Laialy Basma", he: "ליאלי בסמה" }, desc: { ar: "", en: "", he: "" }, price: 45, img: img("1770242413476-apply-1770242413476.webp") },
+      { name: { ar: "نكهة المطعم", en: "House Flavor", he: "טעם הבית" }, desc: { ar: "", en: "", he: "" }, price: 45, img: img("1770242413476-apply-1770242413476.webp") },
       { name: { ar: "تفاحتين فاخر", en: "Double Apple (Al Fakher)", he: "תפוחים כפול (אל פאכר)" }, desc: { ar: "", en: "", he: "" }, price: 30, img: img("1770242413476-apply-1770242413476.webp") },
       { name: { ar: "تفاحتين نخله", en: "Double Apple (Nakhla)", he: "תפוחים כפול (נחלה)" }, desc: { ar: "", en: "", he: "" }, price: 35, img: img("1770242413476-apply-1770242413476.webp") },
       { name: { ar: "Love 66", en: "Love 66", he: "Love 66" }, desc: { ar: "", en: "", he: "" }, price: 25, img: img("1770243116709-apply-1770243116709.webp") },
@@ -313,9 +313,9 @@ const MENU = [
     id: "shisha-services",
     name: { ar: "خدمات الأرجيلة", en: "Hookah Services", he: "שירותי נרגילה" },
     items: [
-      { name: { ar: "خلطة vip ليالي بسمه", en: "VIP Hookah (Laialy Basma)", he: "נרגילה VIP (ליאלי בסמה)" }, desc: { ar: "", en: "", he: "" }, price: 150, img: img("1770297425454-thumb-1770297424817-v3745.webp") },
+      { name: { ar: "خلطة VIP", en: "VIP Hookah Mix", he: "תערובת נרגילה VIP" }, desc: { ar: "", en: "", he: "" }, price: 150, img: img("1770297425454-thumb-1770297424817-v3745.webp") },
       { name: { ar: "تجديد راس عادي", en: "Regular Head Refill", he: "חידוש ראש רגיל" }, desc: { ar: "", en: "", he: "" }, price: 20, img: img("1770243116709-apply-1770243116709.webp") },
-      { name: { ar: "تجديد راس ليالي بسمه", en: "Laialy Basma Head Refill", he: "חידוש ראש ליאלי בסמה" }, desc: { ar: "", en: "", he: "" }, price: 25, img: img("1770242413476-apply-1770242413476.webp") },
+      { name: { ar: "تجديد راس مميز", en: "Premium Head Refill", he: "חידוש ראש פרימיום" }, desc: { ar: "", en: "", he: "" }, price: 25, img: img("1770242413476-apply-1770242413476.webp") },
     ],
   },
   {
@@ -324,7 +324,7 @@ const MENU = [
     items: [
       { name: { ar: "شهر العسل", en: "Honeymoon Cocktail", he: "קוקטייל ירח דבש" }, desc: { ar: "", en: "", he: "" }, price: 32, img: img("1770296944502-thumb-1770296943708-5vtb9.webp") },
       { name: { ar: "موز وفراوله", en: "Banana & Strawberry", he: "בננה ותות" }, desc: { ar: "", en: "", he: "" }, price: 22, img: img("1770296992411-thumb-1770296991897-hwt9hi.webp") },
-      { name: { ar: "ليالي بسمه", en: "Laialy Basma Cocktail", he: "קוקטייל ליאלי בסמה" }, desc: { ar: "", en: "", he: "" }, price: 40, img: img("1770242413476-apply-1770242413476.webp") },
+      { name: { ar: "كوكتيل المطعم", en: "House Cocktail", he: "קוקטייל הבית" }, desc: { ar: "", en: "", he: "" }, price: 40, img: img("1770242413476-apply-1770242413476.webp") },
       { name: { ar: "موز وحليب", en: "Banana & Milk", he: "בננה וחלב" }, desc: { ar: "", en: "", he: "" }, price: 25, img: img("1770297048753-thumb-1770297048369-u6q4q.webp") },
       { name: { ar: "فخفخينا", en: "Fakhfakhina", he: "פחפחינה" }, desc: { ar: "", en: "", he: "" }, price: 22, img: img("1770297078619-thumb-1770297076801-q6f2rj.webp") },
     ],
@@ -333,9 +333,9 @@ const MENU = [
 
 // ---- اللغات / Languages ----
 const LANGS = {
-  ar: { label: "العربية", dir: "rtl", brand: "ليالي بسمة" },
-  en: { label: "English", dir: "ltr", brand: "Laialy Basma" },
-  he: { label: "עברית",  dir: "rtl", brand: "ליאלי בסמה" },
+  ar: { label: "العربية", dir: "rtl", brand: "منيو مطعم" },
+  en: { label: "English", dir: "ltr", brand: "Restaurant Menu" },
+  he: { label: "עברית",  dir: "rtl", brand: "תפריט מסעדה" },
 };
 const LANG_ORDER = ["ar", "en", "he"];
 
@@ -347,12 +347,12 @@ const UI = {
 };
 
 const RESTAURANT = {
-  phone: "0503900125",
-  mapsUrl: "https://maps.google.com/",
-  instagram: "lialybasma",
-  instagramUrl: "https://www.instagram.com/lialybasma/",
-  facebookUrl: "https://www.facebook.com/share/1GL8U5Ta9X/?mibextid=wwXIfr",
-  tiktokUrl: "https://www.tiktok.com/@laialybasma?_r=1&_t=ZS-93Agg4BVFsC",
+  phone: "050-000-0000",
+  mapsUrl: "#",
+  instagram: "",
+  instagramUrl: "#",
+  facebookUrl: "#",
+  tiktokUrl: "#",
   currency: "₪",
 };
 

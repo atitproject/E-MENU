@@ -1,20 +1,21 @@
-# ليالي بسمة — Laialy Basma | Digital Menu
+# منيو مطعم — Restaurant Menu | Digital Menu
 
-منيو إلكتروني (Digital Menu) لمطعم ومقهى **ليالي بسمة**، بنفس تصميم وألوان الموقع الأصلي
-[laialybasmamenu.com](https://laialybasmamenu.com/).
+منيو إلكتروني (Digital Menu) لمطعم ومقهى — قالب عام قابل لإعادة الاستخدام.
 
-An electronic / QR menu for the **Laialy Basma** restaurant & café — Arabic (RTL), mobile-first,
+An electronic / QR menu template for a restaurant & café — Arabic (RTL), mobile-first,
 built as a fast static site with no build step.
 
 ## المزايا / Features
 
-- واجهة عربية (RTL) بخط Noto Sans Arabic + Inter
-- الألوان الأصلية: أخضر داكن `#1a3a32` / `#234d42` وذهبي `#d4a574`
-- شريط أقسام أفقي مع تمييز القسم الحالي أثناء التمرير (scroll-spy)
-- قائمة جانبية (drawer) بكل الأقسام
-- بطاقات أصناف بالصور والوصف والسعر (₪) وشارة "نفذت الكمية"
-- نافذة متابعة إنستغرام
-- زر العودة للأعلى
+- ثلاث لغات: العربية / English / עברית مع تبديل تلقائي للاتجاه (RTL/LTR) والخط
+- خط Cairo، ألوان أخضر داكن `#1a3a32` / `#234d42` وذهبي `#d4a574`
+- تبويبات مجموعات (الكل / عروض / طعام / مشروبات / حلويات / أراجيل) + شريط أقسام مع تمييز القسم الحالي
+- محرّك بحث يفلتر الأصناف
+- بطاقة صنف بالصورة والوصف والسعر وشارة "نفذت الكمية"
+- نافذة تفاصيل الصنف عند الضغط
+- نافذة معلومات المطعم (اتصل بنا / موقعنا / سوشال ميديا) من زر القائمة
+- زر "قيّمنا" مع صندوق تقييم
+- حركة ظهور للأصناف أثناء التمرير
 - بدون أي خطوة بناء — HTML/CSS/JS فقط
 
 ## التشغيل محليًا / Run locally
@@ -23,9 +24,7 @@ built as a fast static site with no build step.
 python -m http.server 8777
 ```
 
-ثم افتح المتصفح على: `http://localhost:8777`
-
-أو افتح `index.html` مباشرة في المتصفح.
+ثم افتح: `http://localhost:8777`
 
 ## البنية / Structure
 
@@ -34,11 +33,11 @@ python -m http.server 8777
 | `index.html` | هيكل الصفحة |
 | `styles.css` | التنسيقات والألوان |
 | `app.js` | توليد القائمة والتفاعلات |
-| `menu-data.js` | بيانات الأصناف والأقسام والأسعار |
+| `menu-data.js` | بيانات الأصناف والأقسام والأسعار واللغات |
 
-## تعديل القائمة / Editing the menu
+## التخصيص / Customization
 
-كل الأصناف والأقسام والأسعار موجودة في [`menu-data.js`](menu-data.js).
-لإضافة أو تعديل صنف غيّر الكائن المناسب داخل مصفوفة `MENU`.
-
-الصور مستضافة على مساحة التخزين الأصلية (Cloudflare R2).
+- اسم المطعم واللغات: عدّل `LANGS` في [`menu-data.js`](menu-data.js).
+- رقم الهاتف والموقع وروابط السوشال ميديا: عدّل `RESTAURANT` (القيم الحالية افتراضية / `#`).
+- الأصناف والأقسام والأسعار: عدّل مصفوفة `MENU`.
+- توزيع الأقسام على المجموعات: `CATEGORY_GROUP`.

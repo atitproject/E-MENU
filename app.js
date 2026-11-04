@@ -1,5 +1,5 @@
 // ============================================================
-//  ليالي بسمة — Laialy Basma  |  Menu rendering & interactions
+//  منيو مطعم — Restaurant Menu  |  Menu rendering & interactions
 //  Trilingual (ar / en / he) + groups + search + smooth scroll-spy
 // ============================================================
 
@@ -270,7 +270,7 @@
     $("#fPhone").href = "tel:" + RESTAURANT.phone;
     $("#fPhoneNum").textContent = RESTAURANT.phone;
 
-    $("#igHandle").textContent = "@" + RESTAURANT.instagram;
+    $("#igHandle").textContent = RESTAURANT.instagram ? "@" + RESTAURANT.instagram : "";
     $("#igFollow").href = RESTAURANT.instagramUrl;
     $("#igFollow").textContent = t.follow;
     $("#igSkip").textContent = t.skip;
