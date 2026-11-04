@@ -341,14 +341,18 @@ const LANG_ORDER = ["ar", "en", "he"];
 
 // ---- نصوص الواجهة / UI strings ----
 const UI = {
-  ar: { tagline: "✦ مطعم ومقهى ✦", sections: "الأقسام", soldOut: "نفذت الكمية", igTitle: "تابعنا على إنستغرام", igChips: ["فعاليات خاصة", "أطباق موسمية", "عروض يومية"], follow: "متابعة", skip: "تخطي", footerFollow: "تابعونا على إنستغرام", rights: "جميع الحقوق محفوظة", toTop: "للأعلى" },
-  en: { tagline: "✦ CAFE & RESTAURANT ✦", sections: "Categories", soldOut: "Sold Out", igTitle: "Follow us on Instagram", igChips: ["Special events", "Seasonal dishes", "Daily offers"], follow: "Follow", skip: "Skip", footerFollow: "Follow us on Instagram", rights: "All rights reserved", toTop: "Top" },
-  he: { tagline: "✦ מסעדה ובית קפה ✦", sections: "קטגוריות", soldOut: "אזל מהמלאי", igTitle: "עקבו אחרינו באינסטגרם", igChips: ["אירועים מיוחדים", "מנות עונתיות", "מבצעים יומיים"], follow: "עקבו", skip: "דלג", footerFollow: "עקבו אחרינו באינסטגרם", rights: "כל הזכויות שמורות", toTop: "למעלה" },
+  ar: { tagline: "✦ مطعم ومقهى ✦", subtitle: "مطعم ومقهى", sections: "الأقسام", soldOut: "نفذت الكمية", available: "متوفر", priceLabel: "السعر", callUs: "اتصل بنا", location: "موقعنا", close: "إغلاق", rateUs: "قيّمنا", rateSub: "رأيك يهمنا!", commentPH: "اكتب تعليقك (اختياري)...", submitRating: "إرسال التقييم", thanks: "شكراً لتقييمك!", igTitle: "تابعنا على إنستغرام", igChips: ["فعاليات خاصة", "أطباق موسمية", "عروض يومية"], follow: "متابعة", skip: "تخطي", footerFollow: "تابعونا على إنستغرام", rights: "جميع الحقوق محفوظة", toTop: "للأعلى" },
+  en: { tagline: "✦ CAFE & RESTAURANT ✦", subtitle: "Cafe & Restaurant", sections: "Categories", soldOut: "Sold Out", available: "Available", priceLabel: "Price", callUs: "Call us", location: "Our location", close: "Close", rateUs: "Rate us", rateSub: "Your opinion matters!", commentPH: "Write your comment (optional)...", submitRating: "Submit rating", thanks: "Thanks for your rating!", igTitle: "Follow us on Instagram", igChips: ["Special events", "Seasonal dishes", "Daily offers"], follow: "Follow", skip: "Skip", footerFollow: "Follow us on Instagram", rights: "All rights reserved", toTop: "Top" },
+  he: { tagline: "✦ מסעדה ובית קפה ✦", subtitle: "מסעדה ובית קפה", sections: "קטגוריות", soldOut: "אזל מהמלאי", available: "זמין", priceLabel: "מחיר", callUs: "התקשר אלינו", location: "המיקום שלנו", close: "סגור", rateUs: "דרגו אותנו", rateSub: "דעתכם חשובה לנו!", commentPH: "כתבו תגובה (אופציונלי)...", submitRating: "שליחת דירוג", thanks: "תודה על הדירוג!", igTitle: "עקבו אחרינו באינסטגרם", igChips: ["אירועים מיוחדים", "מנות עונתיות", "מבצעים יומיים"], follow: "עקבו", skip: "דלג", footerFollow: "עקבו אחרינו באינסטגרם", rights: "כל הזכויות שמורות", toTop: "למעלה" },
 };
 
 const RESTAURANT = {
-  instagram: "laialybasma",
-  instagramUrl: "https://instagram.com/laialybasma",
+  phone: "0503900125",
+  mapsUrl: "https://maps.google.com/",
+  instagram: "lialybasma",
+  instagramUrl: "https://www.instagram.com/lialybasma/",
+  facebookUrl: "https://www.facebook.com/share/1GL8U5Ta9X/?mibextid=wwXIfr",
+  tiktokUrl: "https://www.tiktok.com/@laialybasma?_r=1&_t=ZS-93Agg4BVFsC",
   currency: "₪",
 };
 

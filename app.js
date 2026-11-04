@@ -24,7 +24,6 @@
   const htmlEl = document.documentElement;
   const catRail = $("#catRail");
   const groupTabs = $("#groupTabs");
-  const drawerList = $("#drawerList");
   const menuRoot = $("#menuRoot");
   const searchInput = $("#searchInput");
   const noResults = $("#noResults");
@@ -73,7 +72,6 @@
   // ---------- Render menu in current language ----------
   function render() {
     catRail.innerHTML = "";
-    drawerList.innerHTML = "";
     menuRoot.innerHTML = "";
     itemEls = [];
 
@@ -85,16 +83,6 @@
       pill.dataset.target = cat.id;
       pill.addEventListener("click", () => scrollToSection(cat.id));
       catRail.appendChild(pill);
-
-      const d = el("button");
-      const nameSpan = el("span");
-      nameSpan.textContent = catName;
-      const cnt = el("span", "count");
-      cnt.textContent = cat.items.length;
-      d.appendChild(nameSpan);
-      d.appendChild(cnt);
-      d.addEventListener("click", () => { scrollToSection(cat.id); closeDrawer(); });
-      drawerList.appendChild(d);
 
       const section = el("section");
       section.id = "sec-" + cat.id;
@@ -122,8 +110,32 @@
 
     pills = Array.from(catRail.querySelectorAll(".cat-pill"));
     sections = MENU.map((c) => document.getElementById("sec-" + c.id));
+    setupReveal();
     measureSticky();
     applyFilter();
+  }
+
+  // ---------- Scroll reveal for item cards ----------
+  let revealObserver = null;
+  function revealAll() {
+    document.querySelectorAll(".item").forEach((it) => it.classList.add("in"));
+  }
+  function setupReveal() {
+    // IntersectionObserver is unreliable in a hidden/background tab — just show everything
+    if (!("IntersectionObserver" in window) || document.visibilityState === "hidden") {
+      revealAll();
+      return;
+    }
+    if (revealObserver) revealObserver.disconnect();
+    revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) {
+          en.target.classList.add("in");
+          revealObserver.unobserve(en.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.06 });
+    document.querySelectorAll(".item").forEach((it) => revealObserver.observe(it));
   }
 
   function renderItem(item) {
@@ -167,8 +179,37 @@
 
     row.appendChild(imgWrap);
     row.appendChild(body);
+    row.addEventListener("click", () => openItem(item));
     return row;
   }
+
+  // ---------- Item detail bottom-sheet ----------
+  const itemModal = $("#itemModal");
+  function openItem(item) {
+    const t = UI[lang];
+    $("#itemImg").src = item.img;
+    $("#itemImg").alt = item.name[lang] || item.name.ar;
+    $("#itemName").textContent = item.name[lang] || item.name.ar;
+    $("#itemDesc").textContent = (item.desc && (item.desc[lang] || "")) || "";
+    $("#priceLbl").textContent = t.priceLabel;
+    $("#itemPrice").textContent = item.price;
+    const avail = $("#itemAvail");
+    if (item.soldOut) {
+      avail.textContent = t.soldOut;
+      avail.classList.add("sold");
+    } else {
+      avail.textContent = t.available;
+      avail.classList.remove("sold");
+    }
+    itemModal.classList.add("open");
+  }
+  function closeItem() {
+    itemModal.classList.remove("open");
+    itemModal.querySelector(".sheet").scrollTop = 0;
+  }
+  $("#itemClose").addEventListener("click", closeItem);
+  itemModal.addEventListener("click", (e) => { if (e.target === itemModal) closeItem(); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeItem(); });
 
   // ---------- Filtering (group + search) ----------
   function applyFilter() {
@@ -221,13 +262,13 @@
     $("#tagline").textContent = t.tagline;
     $("#brandName").textContent = L.brand;
     $("#langBtnLabel").textContent = L.label;
-    $("#year").textContent = new Date().getFullYear();
     searchInput.placeholder = SEARCH_PH[lang];
 
-    $("#igFooter").textContent = "@" + RESTAURANT.instagram;
-    $("#igFooter").href = RESTAURANT.instagramUrl;
-    $("#footerFollow").firstChild.textContent = t.footerFollow + " ";
-    $("#rights").textContent = t.rights;
+    $("#fFb").href = RESTAURANT.facebookUrl;
+    $("#fIg").href = RESTAURANT.instagramUrl;
+    $("#fTt").href = RESTAURANT.tiktokUrl;
+    $("#fPhone").href = "tel:" + RESTAURANT.phone;
+    $("#fPhoneNum").textContent = RESTAURANT.phone;
 
     $("#igHandle").textContent = "@" + RESTAURANT.instagram;
     $("#igFollow").href = RESTAURANT.instagramUrl;
@@ -237,7 +278,27 @@
     const chipEls = document.querySelectorAll("#igChips .chip");
     t.igChips.forEach((c, i) => { if (chipEls[i]) chipEls[i].textContent = c; });
 
-    $("#drawerTitle").textContent = t.sections;
+    // restaurant info popup
+    $("#infoName").textContent = L.brand;
+    $("#infoSub").textContent = t.subtitle;
+    $("#infoCallLbl").textContent = t.callUs;
+    $("#infoLocLbl").textContent = t.location;
+    $("#infoPhoneNum").textContent = RESTAURANT.phone;
+    $("#infoPhone").href = "tel:" + RESTAURANT.phone;
+    $("#infoLoc").href = RESTAURANT.mapsUrl;
+    $("#infoFb").href = RESTAURANT.facebookUrl;
+    $("#infoIg").href = RESTAURANT.instagramUrl;
+    $("#infoTt").href = RESTAURANT.tiktokUrl;
+    $("#infoClose").textContent = t.close;
+
+    // rate us
+    $("#rateFabLbl").textContent = t.rateUs;
+    $("#rateTitle").textContent = t.rateUs;
+    $("#rateSub").textContent = t.rateSub;
+    $("#rateComment").placeholder = t.commentPH;
+    $("#rateSubmit").textContent = t.submitRating;
+    $("#rateClose").textContent = t.close;
+
     $("#toTop").setAttribute("aria-label", t.toTop);
   }
 
@@ -306,13 +367,44 @@
   $("#langBtn").addEventListener("click", (e) => { e.stopPropagation(); langMenu.classList.toggle("open"); });
   document.addEventListener("click", () => langMenu.classList.remove("open"));
 
-  // ---------- Drawer ----------
-  const drawer = $("#drawer");
-  const drawerOverlay = $("#drawerOverlay");
-  function closeDrawer() { drawer.classList.remove("open"); drawerOverlay.classList.remove("open"); }
-  $("#menuBtn").addEventListener("click", () => { drawer.classList.add("open"); drawerOverlay.classList.add("open"); });
-  $("#drawerClose").addEventListener("click", closeDrawer);
-  drawerOverlay.addEventListener("click", closeDrawer);
+  // ---------- Restaurant info popup ----------
+  const infoModal = $("#infoModal");
+  const closeInfo = () => infoModal.classList.remove("open");
+  $("#menuBtn").addEventListener("click", () => infoModal.classList.add("open"));
+  $("#infoClose").addEventListener("click", closeInfo);
+  infoModal.addEventListener("click", (e) => { if (e.target === infoModal) closeInfo(); });
+
+  // ---------- Rate us ----------
+  const rateModal = $("#rateModal");
+  const rateStars = $("#rateStars");
+  const rateSubmit = $("#rateSubmit");
+  let rating = 0;
+  function paintStars() {
+    rateStars.querySelectorAll("button").forEach((b) =>
+      b.classList.toggle("on", Number(b.dataset.v) <= rating)
+    );
+    rateSubmit.disabled = rating === 0;
+  }
+  rateStars.querySelectorAll("button").forEach((b) =>
+    b.addEventListener("click", () => { rating = Number(b.dataset.v); paintStars(); })
+  );
+  const closeRate = () => rateModal.classList.remove("open");
+  $("#rateFab").addEventListener("click", () => rateModal.classList.add("open"));
+  $("#rateClose").addEventListener("click", closeRate);
+  rateModal.addEventListener("click", (e) => { if (e.target === rateModal) closeRate(); });
+  rateSubmit.addEventListener("click", () => {
+    if (rating === 0) return;
+    try {
+      localStorage.setItem("lb_rating", JSON.stringify({ rating: rating, comment: $("#rateComment").value, at: Date.now() }));
+    } catch (_) {}
+    rateSubmit.textContent = UI[lang].thanks;
+    setTimeout(() => {
+      closeRate();
+      rating = 0; paintStars();
+      $("#rateComment").value = "";
+      rateSubmit.textContent = UI[lang].submitRating;
+    }, 1300);
+  });
 
   // ---------- Scroll to top ----------
   $("#toTop").addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
@@ -332,6 +424,10 @@
   }
 
   // ---------- Init ----------
+  document.body.classList.add("reveal-ready");
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") setupReveal();
+  });
   buildLangMenu();
   buildGroupTabs();
   applyLangChrome();
