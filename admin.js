@@ -263,52 +263,6 @@
     toast(error ? "خطأ: " + error.message : "تم حفظ الإعدادات");
   });
 
-  // ---------- Import static menu ----------
-  $("#importBtn").addEventListener("click", async () => {
-    if (!confirm("سيُحذف كل المحتوى الحالي في قاعدة البيانات ويُستبدل بالمنيو الثابت. متابعة؟")) return;
-    $("#importBtn").disabled = true;
-    try {
-      await sb.from("items").delete().neq("id", NIL);
-      await sb.from("categories").delete().neq("id", NIL);
-      await sb.from("groups").delete().neq("id", NIL);
-
-      const gPayload = GROUPS.filter((g) => g.id !== "all").map((g, i) => ({ slug: g.id, name_ar: g.label.ar, name_en: g.label.en, name_he: g.label.he, sort: i }));
-      const { data: gRows, error: gErr } = await sb.from("groups").insert(gPayload).select();
-      if (gErr) throw gErr;
-      const gMap = {}; gRows.forEach((r) => (gMap[r.slug] = r.id));
-
-      const cPayload = MENU.map((c, i) => ({ slug: c.id, name_ar: c.name.ar, name_en: c.name.en, name_he: c.name.he, group_id: gMap[CATEGORY_GROUP[c.id]] || null, sort: i }));
-      const { data: cRows, error: cErr } = await sb.from("categories").insert(cPayload).select();
-      if (cErr) throw cErr;
-      const cMap = {}; cRows.forEach((r) => (cMap[r.slug] = r.id));
-
-      const iPayload = [];
-      MENU.forEach((c) => c.items.forEach((it, idx) => iPayload.push({
-        category_id: cMap[c.id], name_ar: it.name.ar, name_en: it.name.en, name_he: it.name.he,
-        desc_ar: it.desc.ar, desc_en: it.desc.en, desc_he: it.desc.he,
-        price: it.price, image_url: it.img, sold_out: !!it.soldOut, sort: idx,
-      })));
-      for (let i = 0; i < iPayload.length; i += 100) {
-        const { error } = await sb.from("items").insert(iPayload.slice(i, i + 100));
-        if (error) throw error;
-      }
-
-      await sb.from("settings").upsert({
-        id: 1, name_ar: LANGS.ar.brand, name_en: LANGS.en.brand, name_he: LANGS.he.brand,
-        tagline_ar: UI.ar.subtitle, tagline_en: UI.en.subtitle, tagline_he: UI.he.subtitle,
-        phone: RESTAURANT.phone, maps_url: RESTAURANT.mapsUrl,
-        facebook_url: RESTAURANT.facebookUrl, instagram_url: RESTAURANT.instagramUrl, tiktok_url: RESTAURANT.tiktokUrl,
-        currency: RESTAURANT.currency,
-      });
-
-      toast("تم الاستيراد بنجاح");
-      loadAll();
-    } catch (err) {
-      alert("فشل الاستيراد: " + (err.message || err));
-    }
-    $("#importBtn").disabled = false;
-  });
-
   // ---------- Go ----------
   refreshAuth();
 })();
