@@ -10,6 +10,22 @@
   --cream-img-a: #f5f0eb;
   --cream-img-b: #e8e0d8;
   --card: #ffffff;
+  /* Cairo = the brand font used on the original site */
+  --font-head: "Cairo", "Noto Sans Arabic", sans-serif;
+  --font-body: "Cairo", "Noto Sans Arabic", sans-serif;
+  /* sticky heights (measured & overwritten by app.js) */
+  --header-h: 72px;
+  --rail-h: 56px;
+}
+
+/* per-language fonts */
+html[lang="en"] {
+  --font-head: "Cairo", "Inter", sans-serif;
+  --font-body: "Inter", "Cairo", sans-serif;
+}
+html[lang="he"] {
+  --font-head: "Noto Sans Hebrew", sans-serif;
+  --font-body: "Noto Sans Hebrew", sans-serif;
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -18,7 +34,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  font-family: "Inter", "Noto Sans Arabic", sans-serif;
+  font-family: var(--font-body);
   background:
     radial-gradient(1200px 600px at 100% -10%, rgba(212,165,116,0.10), transparent 60%),
     var(--cream);
@@ -74,6 +90,7 @@ body {
   color: var(--gold);
 }
 .brand h1 {
+  font-family: var(--font-head);
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -131,10 +148,10 @@ body {
 /* ---------- Category rail ---------- */
 .cat-rail-outer {
   position: sticky;
-  top: 72px;
+  top: var(--header-h);
   z-index: 40;
-  background: linear-gradient(rgba(245,241,236,0.95), rgba(245,241,236,0.75), transparent);
-  backdrop-filter: blur(6px);
+  background: var(--cream);
+  box-shadow: 0 6px 10px -8px rgba(26,58,50,0.25);
 }
 .cat-rail {
   display: flex;
@@ -146,6 +163,7 @@ body {
   flex-shrink: 0;
   padding: 0.5rem 1rem;
   border-radius: 1rem;
+  font-family: var(--font-head);
   font-size: 0.75rem;
   font-weight: 600;
   white-space: nowrap;
@@ -171,7 +189,7 @@ main { padding: 0 1rem 4rem; }
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 0 0.5rem;
-  scroll-margin-top: 130px;
+  scroll-margin-top: calc(var(--header-h) + var(--rail-h) + 8px);
 }
 .section-bar {
   height: 1.5rem;
@@ -180,6 +198,7 @@ main { padding: 0 1rem 4rem; }
   background: linear-gradient(var(--gold), rgba(212,165,116,0.8));
 }
 .section-head h2 {
+  font-family: var(--font-head);
   font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -198,7 +217,7 @@ main { padding: 0 1rem 4rem; }
 /* ---------- Item card ---------- */
 .item {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row; /* image is first child; dir flips it automatically */
   min-height: 8rem;
   border-bottom: 1px solid rgba(26,58,50,0.06);
 }
@@ -224,8 +243,8 @@ main { padding: 0 1rem 4rem; }
 
 .sold-badge {
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  inset-block-start: 0.5rem;
+  inset-inline-end: 0.5rem;
   padding: 0.35rem 0.75rem;
   background: rgba(239,68,68,0.9);
   color: #fff;
@@ -243,6 +262,7 @@ main { padding: 0 1rem 4rem; }
   justify-content: space-between;
 }
 .item-body h3 {
+  font-family: var(--font-head);
   font-weight: 700;
   font-size: 1rem;
   line-height: 1.35;
@@ -263,11 +283,12 @@ main { padding: 0 1rem 4rem; }
 .price {
   display: flex;
   align-items: baseline;
-  flex-direction: row-reverse;
+  flex-direction: row;
   gap: 0.35rem;
   margin-top: 0.75rem;
 }
 .price .amount {
+  font-family: var(--font-head);
   font-size: 1.25rem;
   font-weight: 800;
   color: var(--green-900);
@@ -359,14 +380,16 @@ main { padding: 0 1rem 4rem; }
 }
 .drawer-overlay.open { opacity: 1; pointer-events: auto; }
 .drawer {
-  position: fixed; top: 0; right: 0; bottom: 0; z-index: 91;
+  position: fixed; top: 0; bottom: 0; z-index: 91;
+  inset-inline-start: 0;           /* menu-button side */
   width: 78%; max-width: 20rem;
   background: #fff;
-  transform: translateX(100%);
+  transform: translateX(-100%);    /* LTR: hidden to the left */
   transition: transform .3s ease;
   overflow-y: auto;
-  box-shadow: -10px 0 40px rgba(0,0,0,0.2);
+  box-shadow: 10px 0 40px rgba(0,0,0,0.2);
 }
+html[dir="rtl"] .drawer { transform: translateX(100%); } /* RTL: hidden to the right */
 .drawer.open { transform: translateX(0); }
 .drawer-head {
   background: linear-gradient(var(--green-900), var(--green-800));
@@ -376,7 +399,7 @@ main { padding: 0 1rem 4rem; }
 .drawer-head h2 { margin: 0; font-size: 1.1rem; }
 .drawer-list { padding: 0.5rem; }
 .drawer-list button {
-  width: 100%; text-align: right;
+  width: 100%; text-align: start;
   padding: 0.85rem 1rem; border: none; background: transparent;
   border-radius: 0.75rem; cursor: pointer;
   font-size: 0.95rem; font-weight: 600; color: var(--green-900);

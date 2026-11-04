@@ -10,7 +10,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Noto+Sans+Hebrew:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -31,11 +31,8 @@
       </div>
 
       <div class="lang">
-        <button class="lang-btn" id="langBtn"><span>العربية</span></button>
-        <div class="lang-menu" id="langMenu">
-          <button class="active">العربية</button>
-          <button>English</button>
-        </div>
+        <button class="lang-btn" id="langBtn"><span id="langBtnLabel">العربية</span></button>
+        <div class="lang-menu" id="langMenu"><!-- populated by app.js --></div>
       </div>
     </div>
   </header>
@@ -51,8 +48,8 @@
   <main class="wrap" id="menuRoot"></main>
 
   <footer class="site-footer wrap">
-    <p>تابعونا على إنستغرام <a id="igFooter" href="#" target="_blank" rel="noopener"></a></p>
-    <p style="margin-top:.5rem;opacity:.7">© <span id="year"></span> ليالي بسمة — جميع الحقوق محفوظة</p>
+    <p id="footerFollow">تابعونا على إنستغرام <a id="igFooter" href="#" target="_blank" rel="noopener"></a></p>
+    <p style="margin-top:.5rem;opacity:.7">© <span id="year"></span> · <span id="rights"></span></p>
   </footer>
 
   <!-- Scroll to top -->
@@ -66,7 +63,7 @@
   <div class="drawer-overlay" id="drawerOverlay"></div>
   <aside class="drawer" id="drawer">
     <div class="drawer-head">
-      <h2>الأقسام</h2>
+      <h2 id="drawerTitle">الأقسام</h2>
       <button class="icon-btn" id="drawerClose" aria-label="إغلاق">
         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -85,12 +82,12 @@
         </svg>
       </div>
       <p class="ig-label">Instagram</p>
-      <h3>تابعنا على إنستغرام</h3>
+      <h3 id="igTitle">تابعنا على إنستغرام</h3>
       <p class="handle" id="igHandle"></p>
-      <div class="chips">
-        <span class="chip">فعاليات خاصة</span>
-        <span class="chip">أطباق موسمية</span>
-        <span class="chip">عروض يومية</span>
+      <div class="chips" id="igChips">
+        <span class="chip"></span>
+        <span class="chip"></span>
+        <span class="chip"></span>
       </div>
       <a class="btn-follow" id="igFollow" href="#" target="_blank" rel="noopener">متابعة</a>
       <button class="btn-skip" id="igSkip">تخطي</button>
