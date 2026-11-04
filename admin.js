@@ -98,7 +98,7 @@
     if (!items.length) { el.innerHTML = '<div class="muted">لا أصناف</div>'; return; }
     el.innerHTML = items.map((i) => `
       <div class="row">
-        <img src="${esc(i.image_url || "no-img.jpg")}" alt="" onerror="this.src='no-img.jpg'"/>
+        <img src="${esc(i.image_url || "../no-img.jpg")}" alt="" onerror="this.src='../no-img.jpg'"/>
         <div class="info">
           <div class="t">${esc(i.name_ar)} ${i.sold_out ? '<span class="badge">نفذت</span>' : ""}</div>
           <div class="s">${esc(catName(i.category_id))} · ${esc(i.price)} </div>
@@ -200,7 +200,7 @@
       <div class="grid2"><div><label>Desc EN</label><textarea id="f_den" rows="2">${esc(rec.desc_en || "")}</textarea></div><div><label>Desc HE</label><textarea id="f_dhe" rows="2">${esc(rec.desc_he || "")}</textarea></div></div>
       <label>السعر</label><input id="f_price" type="number" step="0.01" value="${rec.price != null ? rec.price : ""}"/>
       <label>الصورة</label>
-      <img class="thumb-prev" id="f_prev" src="${esc(rec.image_url || "no-img.jpg")}" onerror="this.src='no-img.jpg'"/>
+      <img class="thumb-prev" id="f_prev" src="${esc(rec.image_url || "../no-img.jpg")}" onerror="this.src='../no-img.jpg'"/>
       <input type="file" id="f_file" accept="image/*"/>
       <div class="chk"><input type="checkbox" id="f_sold" ${rec.sold_out ? "checked" : ""}/><label style="margin:0">نفذت الكمية</label></div>
       <label>الترتيب</label><input id="f_sort" type="number" value="${rec.sort != null ? rec.sort : 0}"/>
