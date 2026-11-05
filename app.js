@@ -438,6 +438,17 @@ window.bootMenu = function () {
   buildGroupTabs();
   applyLangChrome();
   render();
+
+  // Called by data-loader.js once live Supabase data arrives, to quietly
+  // re-render the already-visible menu (current language & group preserved).
+  window.refreshMenu = function () {
+    buildLangMenu();
+    buildGroupTabs();
+    applyLangChrome();
+    render();
+    measureSticky();
+  };
+
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureSticky);
   window.addEventListener("load", measureSticky);
 };
